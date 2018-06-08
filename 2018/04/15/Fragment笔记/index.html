@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Android," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="两年前的笔记，再拿出来回顾才发现许久不用有些内容都记混淆了  基本概念Fragment是Android3.0(sdk 17)后引入的一个新的API,出现的初衷是为了适应大屏幕的平板电脑,我们可以把他看成一个小型的Activity，又称Activity片段.Fragment并不能单独使用，必须嵌套在Activity中使用。 V4包下提供的也有一个Fragment,使用的时候要注意:   如果使用v">
+<meta name="keywords" content="Android">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Fragment笔记">
+<meta property="og:url" content="torycrox.github.io/2018/04/15/Fragment笔记/index.html">
+<meta property="og:site_name" content="A Leaf">
+<meta property="og:description" content="两年前的笔记，再拿出来回顾才发现许久不用有些内容都记混淆了  基本概念Fragment是Android3.0(sdk 17)后引入的一个新的API,出现的初衷是为了适应大屏幕的平板电脑,我们可以把他看成一个小型的Activity，又称Activity片段.Fragment并不能单独使用，必须嵌套在Activity中使用。 V4包下提供的也有一个Fragment,使用的时候要注意:   如果使用v">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="/images/Fragment的生命周期.png">
+<meta property="og:image" content="/images/Fragement静态加载.png">
+<meta property="og:image" content="/images/Fragment的动态加载.png">
+<meta property="og:image" content="/images/Fragment的事件操作.png">
+<meta property="og:image" content="/images/Fragment在ViewPager中.png">
+<meta property="og:updated_time" content="2018-04-15T07:08:44.883Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Fragment笔记">
+<meta name="twitter:description" content="两年前的笔记，再拿出来回顾才发现许久不用有些内容都记混淆了  基本概念Fragment是Android3.0(sdk 17)后引入的一个新的API,出现的初衷是为了适应大屏幕的平板电脑,我们可以把他看成一个小型的Activity，又称Activity片段.Fragment并不能单独使用，必须嵌套在Activity中使用。 V4包下提供的也有一个Fragment,使用的时候要注意:   如果使用v">
+<meta name="twitter:image" content="/images/Fragment的生命周期.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="torycrox.github.io/2018/04/15/Fragment笔记/"/>
+
+
+
+
+
+  <title>Fragment笔记 | A Leaf</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">A Leaf</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="torycrox.github.io/2018/04/15/Fragment笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="A Leaf">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avator.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="A Leaf">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Fragment笔记</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-15T14:23:18+08:00">
+                2018-04-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>两年前的笔记，再拿出来回顾才发现许久不用有些内容都记混淆了</p>
+</blockquote>
+<h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><p>Fragment是Android3.0(sdk 17)后引入的一个新的API,出现的初衷是为了适应大屏幕的平板电脑,我们可以把他看成一个小型的Activity，又称Activity片段.Fragment并不能单独使用，必须嵌套在Activity中使用。</p>
+<p>V4包下提供的也有一个Fragment,使用的时候要注意:</p>
+<blockquote>
+<ol>
+<li>如果使用v4包下的<code>Fragment</code>,那么所在的那个<code>Activity</code>就要继承FragmentActivity <code>AppCompatActivity</code>下继承了<code>FragmentActivity</code>，可以直接使用</li>
+<li>需要把<code>getFragmentManager( )</code>改成<code>getSupportFragmentManager()</code></li>
+</ol>
+</blockquote>
+<p>几个子类</p>
+<blockquote>
+<p>对话框:DialogFragment<br>列表:ListFragment<br>选项设置:PreferenceFragment<br>WebView界面:WebViewFragment</p>
+</blockquote>
+<a id="more"></a>
+<p>生命周期:<br><img src="/images/Fragment的生命周期.png" alt="@Fragment的生命周期"></p>
+<p>Fragment的生命周期是跟随Activity的</p>
+<h3 id="Fragment基本创建与使用"><a href="#Fragment基本创建与使用" class="headerlink" title="Fragment基本创建与使用"></a>Fragment基本创建与使用</h3><p>静态加载<br><img src="/images/Fragement静态加载.png" alt="@Fragement静态加载"></p>
+<p>注意点:<br>name属性是全限定类名哦，就是要包含Fragment的包名<br>layout属性会覆盖fragment布局文件中的layout属性<br>必须为布局设置id，系统在Activity恢复时用它来存储状态, 否则配置发生变化或内存重启时会报错(如旋转屏幕)</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">fragment</span></span></span><br><span class="line"><span class="tag">     <span class="attr">android:id</span>=<span class="string">"@+id/fg_fragment"</span></span></span><br><span class="line"><span class="tag">     <span class="attr">android:name</span>=<span class="string">"com.tory.demo.sample.test.LifeCycleFragment"</span></span></span><br><span class="line"><span class="tag">     <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">     <span class="attr">android:layout_height</span>=<span class="string">"100dp"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<p>动态加载<br><img src="/images/Fragment的动态加载.png" alt="@Fragment的动态加载"></p>
+<p>注意点:<br>Fragment的管理是通过事务来管理的，所以可以进行多次add,remove等<br>注意事务需要commit</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">LifeCycleFragment fragment = <span class="keyword">new</span> LifeCycleFragment();</span><br><span class="line">getSupportFragmentManager().beginTransaction()</span><br><span class="line">     .add(R.id.frame_container,fragment,<span class="string">"LifeCycleFragment"</span>)</span><br><span class="line">     .addToBackStack(<span class="string">"LifeCycleFragment"</span>)</span><br><span class="line">     .commit();</span><br></pre></td></tr></table></figure>
+<p>Fragment的事务操作<br><img src="/images/Fragment的事件操作.png" alt="@Fragment的事件操作"></p>
+<blockquote>
+<p>fragment的每一次改变的提交给activity，都称为一个事务<br><code>add()</code>, <code>remove()</code>,<code>replace()</code> ,<code>show()</code>, <code>hide()</code>等一系列方法，只有commit了以后才会生效<br>Fragment的事务操作是<strong>异步</strong>的，commit了以后相当于进入了一个队列，然后等待合适的时刻执行<br> addToBackStack() 可以把fragment的本次操作放入Activity的返回栈中，通过点击back键可以回到以前状态，可以通过此方法移除或隐藏Fragment，个人<strong>不建议使用</strong>。<br> 从FragmentManger.beginTransaction真正返回的确是一个<code>BackStackRecord</code>类， 其实现了FragmentTransaction所定义的接口。</p>
+</blockquote>
+<h3 id="使用技巧与建议"><a href="#使用技巧与建议" class="headerlink" title="使用技巧与建议:"></a>使用技巧与建议:</h3><ol>
+<li><p>对<code>Fragment</code>传递数据，建议使用<code>setArguments(Bundle args)</code>，而后在<code>onCreate</code>中使用<code>getArguments()</code>取出，在 “内存重启”前，系统会帮你保存数据，不会造成数据的丢失。和Activity的Intent原理一致。</p>
+</li>
+<li><p>使用<code>newInstance(参数)</code> 创建<code>Fragment</code>对象，优点是调用者只需要关系传递的哪些数据，而无需关心传递数据的Key是什么。<br>可结合第一点使用</p>
+</li>
+<li><p>Fragment之间的通信，在同一个<code>Activity</code>下的两个<code>Fragment</code>的通信：<code>FragmentA</code>调用其宿主<code>Activity</code>的方法，宿主<code>Activity</code>再根据<code>FragmentA</code>的调用参数去调用<code>FragmentB</code>的方法并传递参数给B</p>
+</li>
+</ol>
+<p>在AS里面右键，新建Fragment, AS提供了一个Fragment的模板写法</p>
+<blockquote>
+<ol>
+<li>使用newInstance(参数) 创建Fragment对象</li>
+<li>使用setArguments(Bundle args)，而后在onCreate中使用getArguments()取出 在 “内存重启”前，系统会帮你保存数据，不会造成数据的丢失。和Activity的Intent原理一致。</li>
+<li>在Fragment中定义一个内部回调接口,在Activity中实现</li>
+</ol>
+</blockquote>
+<ol>
+<li><p>使用<code>DialogFragment</code>代码<code>Dialog</code>，便于管理<code>Dialog</code>的生命周期和保存状态。<br><code>DialogFragment</code>在<code>show</code>的时候容易出现以下错误<code>java.lang.IllegalStateException: Fragment already added</code>，这是重复添加引起的，<code>fragment.isAdded()</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(!fragment.isAdded())&#123;</span><br><span class="line">    fragment.show(getFragmentManager(),<span class="string">"fragment"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>add(), show(), hide(), replace(),remove()…<br><code>show()</code>，<code>hide()</code>最终是让<code>Fragment</code>的<code>View setVisibility()</code>，不会调用生命周期;<br>如:  <code>hide()</code></p>
+<ul>
+<li>设置<code>mHidden</code> 为<code>true</code></li>
+<li><code>fragment.mView.setVisibility(View.GONE</code>); 隐藏<code>fragment</code>的<code>view</code></li>
+<li><code>fragment.onHiddenChanged(true)</code>; 调用onHiddenChange<br>可以发现也可能通过<code>fragment.getView().setVisibility();</code>来控制fragment的显示，只是此时没有改变<code>mHidden</code>的状态<br><code>replace()</code>的话会销毁前一个视图，即调用<code>onDestoryView</code>、<code>onCreateView</code>等一系列生命周期</li>
+</ul>
+</li>
+<li><p>onHiddenChanged的回调时机<br>当使用<code>add()+show()</code>，<code>hide()</code>跳转新的Fragment时，旧的Fragment回调<code>onHiddenChanged()</code>，不会回调<code>onStop()</code>等生命周期方法，而新的Fragment在创建时是不会回调<code>onHiddenChanged()</code>，这点要切记。<br>有类似需求可以自己实现</p>
+</li>
+<li><p>ViewPager中的Fragment生命周期<br>ViewPager会预先加载预先加载包换当前可见的Fragment和其两侧的三个Fragment<br>具体参考这篇文章：<a href="http://www.jianshu.com/p/660ec2666faa" target="_blank" rel="noopener">http://www.jianshu.com/p/660ec2666faa</a><br><img src="/images/Fragment在ViewPager中.png" alt="Fragment在ViewPager中"></p>
+</li>
+<li><p>setUserVisibleHint<br>使用<code>ViewPager</code>时，切换回上一个Fragment页面时（已经初始化完毕），不会回调任何生命周期方法以及<code>onHiddenChanged()</code>，只有<code>setUserVisibleHint(boolean isVisibleToUser)</code>会被回调，所以如果你想进行一些懒加载，可以重载该方法实现(需要配合fragment生命周期使用)。<br>具体实现可以参考:<a href="http://www.jianshu.com/p/c5d29a0c3f4c" target="_blank" rel="noopener">http://www.jianshu.com/p/c5d29a0c3f4c</a><br><code>setUserVisibleHint</code>的回调实际上是由<code>ViewPager</code>触发的，与fragment的show，hide状态没有太大关系</p>
+</li>
+<li><p><code>commit()</code>, <code>commitNow()</code> 和<code>executePendingTransactions()</code>;</p>
+</li>
+</ol>
+<p>commit并不是立即执行的, 它会被发送到主线程的任务队列当中去, 当主线程准备好执行它的时候执行; 所以在使用commit的后要注意通过isAdded()或isShow()等方法是并不可靠的，因为很有可能因为Fragment还没到添加上去而引起一些错误。</p>
+<p>想要同步执行可以使用<code>commitNow</code>或者<code>executePendingTransactions</code>; commitNow是立刻执行<strong>当前事务</strong>, 而<code>executePendingTransactions</code>立即执行在队列中的所有事务！</p>
+<h3 id="使用中出现的问题"><a href="#使用中出现的问题" class="headerlink" title="使用中出现的问题:"></a>使用中出现的问题:</h3><h4 id="Activity重新创建"><a href="#Activity重新创建" class="headerlink" title="Activity重新创建"></a>Activity重新创建</h4><p>通过事务动态添加Fragment的时候我们可能很自然的这样写</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line">onCreate(Bundle savedInstance) &#123;</span><br><span class="line">     getSupportFragmentManager().beginTransaction()</span><br><span class="line">         .add(R.id.frame_container,fragment)</span><br><span class="line">         .commit();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>表面上看起来没有什么情况，看起来好像也没有什么不对，但在实际项目中可以看到很多这样的写法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line">onCreate(Bundle savedInstance) &#123;</span><br><span class="line">   <span class="keyword">if</span> (savedIntance == <span class="keyword">null</span>) &#123;</span><br><span class="line">      <span class="comment">// create fragment and add it to Activity.</span></span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因为系统配置信息发生变化或内存重启的时候，系统会把Activity杀掉，然后再重新创建它。此时系统会尽可能的恢复以前的状态，所以以前添加的Fragment也会重新添加进去，也就没有必要重新创建一个Fragment;<br>这种情况下会引发几个问题</p>
+<ol>
+<li>Fragment对象的获取,这个可以在需要和时候通过<code>findFragmentByTag</code>或<code>onAttachFragment</code>获取，也可以通过自己写回调接口来实现。</li>
+<li>Fragment的状态会丢失，丢失的原因是onCreate重新创建时，会调用Framgment的默认无参构造来创建Fragment对象。所以这也是为什么文档中说Fragment一定要有一个默认的构造函数，而且最好不要有带参数的构造函数，传参数要用setArguments。<br>所以需要在<code>onSaveInstanceState()</code>时，把一些变量保存，然后在onCreate时恢复</li>
+<li>hide、show问题，主要也是Fragment的状态会丢失问题引起的，因为恢复的所有的Fragment的都是以show状态恢复的，需要自己手动恢复其状态。这里是一个示例:<a href="http://www.jianshu.com/p/d9143a92ad94" target="_blank" rel="noopener">http://www.jianshu.com/p/d9143a92ad94</a></li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestActivity</span> <span class="keyword">extends</span> <span class="title">Activity</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String STATE_SAVE_IS_HIDDEN = <span class="string">"STATE_SAVE_IS_HIDDEN"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(@Nullable Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">if</span> (savedInstanceState != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">boolean</span> isSupportHidden = savedInstanceState.getBoolean(STATE_SAVE_IS_HIDDEN);</span><br><span class="line"></span><br><span class="line">        FragmentTransaction ft = getFragmentManager().beginTransaction();</span><br><span class="line">        <span class="keyword">if</span> (isSupportHidden) &#123;</span><br><span class="line">            ft.hide(<span class="keyword">this</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            ft.show(<span class="keyword">this</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        ft.commit();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSaveInstanceState</span><span class="params">(Bundle outState)</span> </span>&#123;</span><br><span class="line">        ...</span><br><span class="line">        outState.putBoolean(STATE_SAVE_IS_HIDDEN, isHidden());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="state-loss异常"><a href="#state-loss异常" class="headerlink" title="state loss异常"></a>state loss异常</h4><p><code>FragmentTransaction</code>是异步的，commit()仅是相当于把操作加入到<code>FragmentManager</code>的队列，然后<code>FragmentManager</code>会在某一个时刻来执行，并不是立即执行。<br>所以在实际项目中可能会偶尔出现这种报错:<code>Can not perform this action after onSaveInstanceState</code>。从这段报错信息可以猜测出我们<code>commit()</code>是<code>onSaveInstanceState()</code>之后了。<br>出现这种情况有两种解决方案:</p>
+<ol>
+<li>尽量要在<code>onSaveInstanceState</code>之前进行<code>Fragment</code>进行操作, 可以添加标志符解决<br>参考Dialer</li>
+<li>使用<code>commitAllowStateLoss</code>，它可以保证在Activity onStop以后仍然顺利执行commit操作，但是会造成状态丢失。</li>
+</ol>
+<blockquote>
+<p>报错的原因见<code>BackStackRecord.commitInternal -&gt; FragmentManager.enqueueAction</code> ，即在<code>commit</code>的时候，<code>FragmentManager</code>通过<code>checkStateLoss</code>进行了一次状态检测<br>在使用<code>DilaogFragment</code>的<code>show</code>和<code>dissmiss</code>方法时也要注意发生该异常的情况，建议使用<code>dismissAllowingStateLoss</code>方法</p>
+</blockquote>
+<p>commitAllowingStateLoss会造成状态丢失，具体情况如下:</p>
+<ol>
+<li>当前您的 <code>Activity</code> 在显示 <code>FragmentA</code></li>
+<li>您的 Activity 被切换到后台了（(<code>onStop()</code> 和 <code>onSaveInstanceState()</code> 函数被调用了）</li>
+<li>这个时候您的 <code>Activity</code> 的逻辑发生了一些变化，您使用 <code>FragmentB</code> 替换了 <code>FragmentA</code> 并调用了 <code>commitAllowingStateLoss()</code> 函数来提交这个变化。</li>
+</ol>
+<p>这个时候，当用户再次切回您的 Activity 的时候可能出现如下两种状态：</p>
+<ol>
+<li>如果系统内存不足并且杀死了您的应用，当用户重新打开您的 应用的时候，系统将会恢复您的应用到上面第二步的状态，而 <code>FragmentB</code> 是不会显示的。</li>
+<li>如果系统没有杀死您的应用，用户则可以看到 <code>FragmentB</code>。当 Activity 再次回到后台的时候（<code>onStop</code>）， <code>FragmentB</code> 的状态才会被保存起来。</li>
+</ol>
+<h3 id="文章"><a href="#文章" class="headerlink" title="文章"></a>文章</h3><p><a href="https://asce1885.gitbooks.io/android-rd-senior-advanced/content/wo_wei_shi_yao_zhu_zhang_fan_dui_shi_yong_android_fragment.html" target="_blank" rel="noopener">我为什么主张反对使用Android Fragment</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/23/Git笔记/" rel="next" title="Git笔记">
+                <i class="fa fa-chevron-left"></i> Git笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/15/Android性能优化/" rel="prev" title="Android性能优化">
+                Android性能优化 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avator.jpg"
+                alt="A Leaf" />
+            
+              <p class="site-author-name" itemprop="name">A Leaf</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/ToryCrox" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本概念"><span class="nav-number">1.</span> <span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Fragment基本创建与使用"><span class="nav-number">2.</span> <span class="nav-text">Fragment基本创建与使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用技巧与建议"><span class="nav-number">3.</span> <span class="nav-text">使用技巧与建议:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用中出现的问题"><span class="nav-number">4.</span> <span class="nav-text">使用中出现的问题:</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Activity重新创建"><span class="nav-number">4.1.</span> <span class="nav-text">Activity重新创建</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#state-loss异常"><span class="nav-number">4.2.</span> <span class="nav-text">state loss异常</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文章"><span class="nav-number">5.</span> <span class="nav-text">文章</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">A Leaf</span>
+
+  
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
