@@ -280,6 +280,138 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="torycrox.github.io/2019/07/30/Android仿IOS打开应用进出场动画开发/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="A Leaf">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avator.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="A Leaf">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/07/30/Android仿IOS打开应用进出场动画开发/" itemprop="url">Android仿IOS打开应用进出场动画开发</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-30T23:48:15+08:00">
+                2019-07-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <blockquote>
+<p>3年前开发Rom时的一个任务，就是仿照IOS打开应用和退出应用的开发过程和思路，可能已经过时，现在拿出来看看以前的思路</p>
+</blockquote>
+<h3 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h3><p>最终效果做到如下的形式: 点击Launcher上的icon，app从Icon的位置开始放大到全屏，观察发现Launcher也有从Icon位置放大的效果;退场时，app界面和Launcher同时缩小到Icon位置</p>
+<h3 id="设置方法的选择"><a href="#设置方法的选择" class="headerlink" title="设置方法的选择:"></a>设置方法的选择:</h3><p>进出场动画和转场动画的本质是一样,都是从一个activity过渡到另一个activity的动画,所不同是进出场动画是在两个app之间的过渡，而且Launcher所在的activity是一个壁纸窗口，这是使用的时候需要注意的。</p>
+<h4 id="三种方法"><a href="#三种方法" class="headerlink" title="三种方法"></a>三种方法</h4><ul>
+<li>设置theme中的 android:windowAnimationStyle<br>这是最简单方便的方式，只需要我们配置几个动画的xml就ok了，缺点是由于是在主题的里面的静态资源，不能根据实际情况改变动画类型和和设置相关参数。诸多条件限制决定了这种方式不能达到目的。</li>
+<li>overridePendingTransition方式<br>这种方式可以让我们覆盖掉第一种方式设置的动画，优点是我们可以在代码里面动态改变它，但遗憾的是这个方法只受动画的xml文件形式，也无法接受设置动画的参数。</li>
+<li>ActivityOptions方式<br>这种方法是在startActivity的时候，通过ActivityOptions构造出一个Bundle参数，传递给WindowManager，用来覆盖默认的动画，这样就为我们定义转场动画提供了扩展空间。实际查看Launcher的源代码，原生也是这么做的。
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/07/30/Android仿IOS打开应用进出场动画开发/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="torycrox.github.io/2018/07/07/Electron笔记/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -814,136 +946,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="torycrox.github.io/2018/03/23/Git笔记/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="A Leaf">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avator.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="A Leaf">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/23/Git笔记/" itemprop="url">Git笔记</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-23T22:54:09+08:00">
-                2018-03-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <blockquote>
-<p><a href="http://www.imooc.com/article/1089" title="25个 Git 进阶技巧" target="_blank" rel="noopener">25个 Git 进阶技巧</a><br><a href="http://www.imooc.com/article/1111" title="Git常用命令备忘" target="_blank" rel="noopener">Git常用命令备忘</a></p>
-</blockquote>
-<h2 id="命令及技巧"><a href="#命令及技巧" class="headerlink" title="命令及技巧"></a>命令及技巧</h2><h3 id="git-log查看提交记录"><a href="#git-log查看提交记录" class="headerlink" title="git log查看提交记录"></a>git log查看提交记录</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">log</span> git <span class="built_in">log</span> &lt;file&gt; <span class="comment"># 查看该文件每次提交记录 </span></span><br><span class="line">git <span class="built_in">log</span> -p &lt;file&gt; <span class="comment"># 查看每次详细修改内容的</span></span><br><span class="line">git <span class="built_in">log</span> -p -2 <span class="comment"># 查看最近两次详细修改内容的</span></span><br><span class="line">git <span class="built_in">log</span> --<span class="built_in">stat</span> <span class="comment"># 查看提交统计信息</span></span><br></pre></td></tr></table></figure>
-<h3 id="git-reflog查看被撤消的提交"><a href="#git-reflog查看被撤消的提交" class="headerlink" title="git reflog查看被撤消的提交"></a>git reflog查看被撤消的提交</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#恢复</span></span><br><span class="line">git reset --hard [<span class="built_in">hash</span>]</span><br></pre></td></tr></table></figure>
-<h3 id="git-stash暂存"><a href="#git-stash暂存" class="headerlink" title="git stash暂存"></a>git stash暂存</h3><p><code>git stash</code>用好很强大</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git stash <span class="comment">#暂存修改，注意要先git add</span></span><br><span class="line">git stash apply <span class="comment">#应用暂存修改</span></span><br><span class="line">git stash pop   <span class="comment">#应用暂存修改并删除</span></span><br><span class="line">git stah list   <span class="comment">#查看暂存的修改</span></span><br><span class="line">git stash apply [stash@&#123;0&#125;] <span class="comment">#应用指定的暂存修改</span></span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/03/23/Git笔记/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -998,7 +1000,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1059,7 +1061,7 @@
     <footer id="footer" class="footer">
       <div class="footer-inner">
         <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

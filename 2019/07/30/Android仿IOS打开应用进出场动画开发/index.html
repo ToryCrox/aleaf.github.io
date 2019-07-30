@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Android," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="3年前开发Rom时的一个任务，就是仿照IOS打开应用和退出应用的开发过程和思路，可能已经过时，现在拿出来看看以前的思路  目标最终效果做到如下的形式: 点击Launcher上的icon，app从Icon的位置开始放大到全屏，观察发现Launcher也有从Icon位置放大的效果;退场时，app界面和Launcher同时缩小到Icon位置 设置方法的选择:进出场动画和转场动画的本质是一样,都是从一个">
+<meta name="keywords" content="Android">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android仿IOS打开应用进出场动画开发">
+<meta property="og:url" content="torycrox.github.io/2019/07/30/Android仿IOS打开应用进出场动画开发/index.html">
+<meta property="og:site_name" content="A Leaf">
+<meta property="og:description" content="3年前开发Rom时的一个任务，就是仿照IOS打开应用和退出应用的开发过程和思路，可能已经过时，现在拿出来看看以前的思路  目标最终效果做到如下的形式: 点击Launcher上的icon，app从Icon的位置开始放大到全屏，观察发现Launcher也有从Icon位置放大的效果;退场时，app界面和Launcher同时缩小到Icon位置 设置方法的选择:进出场动画和转场动画的本质是一样,都是从一个">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="torycrox.github.io/2019/07/30/images/进场动画时的设置流程.png">
+<meta property="og:image" content="torycrox.github.io/2019/07/30/images/_1471512031023.png">
+<meta property="og:updated_time" content="2019-07-30T16:04:33.966Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android仿IOS打开应用进出场动画开发">
+<meta name="twitter:description" content="3年前开发Rom时的一个任务，就是仿照IOS打开应用和退出应用的开发过程和思路，可能已经过时，现在拿出来看看以前的思路  目标最终效果做到如下的形式: 点击Launcher上的icon，app从Icon的位置开始放大到全屏，观察发现Launcher也有从Icon位置放大的效果;退场时，app界面和Launcher同时缩小到Icon位置 设置方法的选择:进出场动画和转场动画的本质是一样,都是从一个">
+<meta name="twitter:image" content="torycrox.github.io/2019/07/30/images/进场动画时的设置流程.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="torycrox.github.io/2019/07/30/Android仿IOS打开应用进出场动画开发/"/>
+
+
+
+
+
+  <title>Android仿IOS打开应用进出场动画开发 | A Leaf</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">A Leaf</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="torycrox.github.io/2019/07/30/Android仿IOS打开应用进出场动画开发/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="A Leaf">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avator.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="A Leaf">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Android仿IOS打开应用进出场动画开发</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-30T23:48:15+08:00">
+                2019-07-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>3年前开发Rom时的一个任务，就是仿照IOS打开应用和退出应用的开发过程和思路，可能已经过时，现在拿出来看看以前的思路</p>
+</blockquote>
+<h3 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h3><p>最终效果做到如下的形式: 点击Launcher上的icon，app从Icon的位置开始放大到全屏，观察发现Launcher也有从Icon位置放大的效果;退场时，app界面和Launcher同时缩小到Icon位置</p>
+<h3 id="设置方法的选择"><a href="#设置方法的选择" class="headerlink" title="设置方法的选择:"></a>设置方法的选择:</h3><p>进出场动画和转场动画的本质是一样,都是从一个activity过渡到另一个activity的动画,所不同是进出场动画是在两个app之间的过渡，而且Launcher所在的activity是一个壁纸窗口，这是使用的时候需要注意的。</p>
+<h4 id="三种方法"><a href="#三种方法" class="headerlink" title="三种方法"></a>三种方法</h4><ul>
+<li>设置theme中的 android:windowAnimationStyle<br>这是最简单方便的方式，只需要我们配置几个动画的xml就ok了，缺点是由于是在主题的里面的静态资源，不能根据实际情况改变动画类型和和设置相关参数。诸多条件限制决定了这种方式不能达到目的。</li>
+<li>overridePendingTransition方式<br>这种方式可以让我们覆盖掉第一种方式设置的动画，优点是我们可以在代码里面动态改变它，但遗憾的是这个方法只受动画的xml文件形式，也无法接受设置动画的参数。</li>
+<li>ActivityOptions方式<br>这种方法是在startActivity的时候，通过ActivityOptions构造出一个Bundle参数，传递给WindowManager，用来覆盖默认的动画，这样就为我们定义转场动画提供了扩展空间。实际查看Launcher的源代码，原生也是这么做的。<a id="more"></a>
+</li>
+</ul>
+<h3 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h3><p>进出场动画的设置流程主要与AMS和WMS有关，主要参考以下博客:<br><a href="http://blog.csdn.net/windskier/article/details/7172710" target="_blank" rel="noopener">android Application Component研究之Activity(二)</a><br> <a href="http://blog.csdn.net/guoqifa29/article/details/49273065" target="_blank" rel="noopener">WindowManagerService动画分析</a> </p>
+<p>为了更好的分析动画的设置流程，需要打开WMS和AMS的日志开关<br>通过<code>adb shell dumpsys window -d enable a</code>打开WMS的日志开关<br>通过<code>adb shell dumpsys activity log a on</code>打开AMS的日志开关</p>
+<h3 id="进场动画"><a href="#进场动画" class="headerlink" title="进场动画"></a>进场动画</h3><p>首先观察进场动画：点击APP的Icon后，整个界面从Icon位置放大，Icon放大到一定程度后可以隐约看到APP的界面，继续放大，app界面逐渐从透明到不透明，最终覆盖全屏。</p>
+<p>Android原生通过ActivityOptions提供了一个类似的转场动画makeScaleUpAnimation，它的使用如下:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ActivityOptions opts = ActivityOptions.makeScaleUpAnimation(v, left, top , width , height);</span><br><span class="line">startActivity(intent, opts.toBundle());</span><br></pre></td></tr></table></figure>
+<p>其效果出来只有app放大，而Launcher没有动画效果，找遍资料可以发现android没有提供相关接口。<br>    查看makeScaleUpAnimation方法的源码:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ActivityOptions <span class="title">makeScaleUpAnimation</span><span class="params">(View source,</span></span></span><br><span class="line"><span class="function"><span class="params">        <span class="keyword">int</span> startX, <span class="keyword">int</span> startY, <span class="keyword">int</span> width, <span class="keyword">int</span> height)</span> </span>&#123;</span><br><span class="line">    ActivityOptions opts = <span class="keyword">new</span> ActivityOptions();</span><br><span class="line">    opts.mPackageName = source.getContext().getPackageName();</span><br><span class="line">    opts.mAnimationType = ANIM_SCALE_UP;</span><br><span class="line">    <span class="keyword">int</span>[] pts = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">2</span>];</span><br><span class="line">    source.getLocationOnScreen(pts);</span><br><span class="line">    opts.mStartX = pts[<span class="number">0</span>] + startX;</span><br><span class="line">    opts.mStartY = pts[<span class="number">1</span>] + startY;</span><br><span class="line">    opts.mWidth = width;</span><br><span class="line">    opts.mHeight = height;</span><br><span class="line">    <span class="keyword">return</span> opts;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>发现里面并没有构造一个<code>Animation</code>,只是设置了相关位置的相关参数，以及<code>ANIM_SCALE_UP</code>这个动画类型的标识，真正构造动画的方法在<code>com.android.server.wm.AppTransition</code>里面，这是一个协助<code>WindowManagerServervice</code>来设置转场动画的类。当真正需要执行动画时，会从<code>AppTransition</code>中加载或构造合适的动画，交由<code>WindowManagerServervice</code>来执行。</p>
+<p><code>AppTransition</code>每次会加载两个动画，一个是打开(<code>enter</code>)动画，另一个是退出(<code>exit</code>)动画，从<code>Launcher</code>打开<code>Activity</code>，对<code>Activity</code>来说是<code>enter</code>，对<code>Launcher</code>就是<code>exit</code>，加载<code>ScaleUp</code>的动画都会调用AppTransition的<code>createScaleUpAnimationLocked</code>:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> Animation <span class="title">createScaleUpAnimationLocked</span><span class="params">(<span class="keyword">int</span> transit, <span class="keyword">boolean</span> enter,<span class="keyword">int</span> appWidth, <span class="keyword">int</span> appHeight)</span> </span>&#123;</span><br><span class="line">    Animation a = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">if</span> (enter) &#123;</span><br><span class="line">	    ...</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">	    ...</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> a;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个方法有几个参数:</p>
+<ul>
+<li><code>transit</code>: 表示本次过渡动画的类型, 由于<code>Laucher</code>是壁纸窗口,所以此时<code>transit</code>的值为<code>TRANSIT_WALLPAPER_CLOSE</code></li>
+<li><code>enter</code>:表示该窗口时进入还是退出,后来加载动画的时候调用两次<code>createScaleUpAnimationLocked</code>,两次就是这个参数值不同，一次为true，一次为false</li>
+<li><code>appWidth</code>, <code>appHeight</code>:顾名思义，为app最终的宽高</li>
+</ul>
+<p><code>createScaleUpAnimationLocked</code>可以看到进入<code>enter=true</code>时的动画，其实就是两个动画的组合，一个放大动画<code>ScaleAnimation</code>，一个透明度变化动画(<code>AlphaAnimation</code>)，这就是App打开时的动画，而<code>enter=false</code>时，这时加载的应该是App打开时Launcher的动画，却只有透明度变化(<code>AlphaAnimation</code>)，仿照app放大的动画写一个launcher放大的动画即可:</p>
+<p>先看app放大的动画:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (enter) &#123;</span><br><span class="line">       <span class="comment">// Entering app zooms out from the center of the initial rect.</span></span><br><span class="line">       <span class="keyword">float</span> scaleW = mNextAppTransitionStartWidth / (<span class="keyword">float</span>) appWidth;</span><br><span class="line">       <span class="keyword">float</span> scaleH = mNextAppTransitionStartHeight / (<span class="keyword">float</span>) appHeight;</span><br><span class="line">       Animation scale = <span class="keyword">new</span> ScaleAnimation(scaleW, <span class="number">1</span>, scaleH, <span class="number">1</span>,</span><br><span class="line">               computePivot(mNextAppTransitionStartX, scaleW),</span><br><span class="line">               computePivot(mNextAppTransitionStartY, scaleH));</span><br><span class="line">               <span class="comment">//modify start</span></span><br><span class="line">       <span class="keyword">if</span>(XOS_LANCHER_TRANSITION &amp;&amp; transit == TRANSIT_WALLPAPER_CLOSE)&#123;</span><br><span class="line">           scale.setInterpolator(mDecelerateXLauncherInterpolator);</span><br><span class="line">       &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">           scale.setInterpolator(mDecelerateInterpolator);</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="comment">//modify  end</span></span><br><span class="line">        Animation alpha = <span class="keyword">new</span> AlphaAnimation(<span class="number">0</span>, <span class="number">1</span>);</span><br><span class="line">       <span class="comment">//modify start</span></span><br><span class="line">       <span class="keyword">if</span>(XOS_LANCHER_TRANSITION &amp;&amp; transit == TRANSIT_WALLPAPER_CLOSE)&#123;</span><br><span class="line">           alpha.setInterpolator(mThumbnailXLauncherFadeInInterpolator);</span><br><span class="line">       &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">           alpha.setInterpolator(mThumbnailFadeOutInterpolator);</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="comment">// modify end</span></span><br><span class="line">       AnimationSet set = <span class="keyword">new</span> AnimationSet(<span class="keyword">false</span>);</span><br><span class="line">       set.addAnimation(scale);</span><br><span class="line">       set.addAnimation(alpha);</span><br><span class="line">       set.setDetachWallpaper(<span class="keyword">true</span>);</span><br><span class="line">       a = set;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这时我更换了原来的两个动画的<code>Interpolator</code>，其中<code>mDecelerateXLauncherInterpolator = new DecelerateInterpolator(2.5f)</code>，将放大动画速度的因子调大，以便使减速过程更明显</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">mThumbnailXLauncherFadeInInterpolator = new Interpolator() &#123;</span><br><span class="line">      @Override</span><br><span class="line">      public float getInterpolation(float input) &#123;</span><br><span class="line">      // Linear response for first fraction, then complete after that.</span><br><span class="line">          if (input &lt; RECENTS_THUMBNAIL_XLAUNCHER_FADEOUT_FRACTION) &#123;</span><br><span class="line">              float t = input / RECENTS_THUMBNAIL_XLAUNCHER_FADEOUT_FRACTION;</span><br><span class="line">              return mLinearOutSlowInInterpolator.getInterpolation(t);</span><br><span class="line">          &#125;</span><br><span class="line">          return 1f;</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;;</span><br></pre></td></tr></table></figure>
+<p><code>RECENTS_THUMBNAIL_XLAUNCHER_FADEOUT_FRACTION=0.15</code>，这样以便app界面能够更快的将背景的Launcher界面上的Icon图标完全覆盖，不至于出现Launcher界面放大时看出变得很大的Icon图标</p>
+<p>然后是Launcher的放大动画:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">if(XOS_LANCHER_TRANSITION &amp;&amp; transit == TRANSIT_WALLPAPER_CLOSE)&#123;</span><br><span class="line">     //enter app : animation for launcher exit</span><br><span class="line">     //mNextAppTransitionStartWidth,mNextAppTransitionStartHeight 是通过StartActivity传入的APP Icon的宽高，appWidth，appHeight是app全屏的时的大小</span><br><span class="line">     float scaleW = mNextAppTransitionStartWidth / (float) appWidth;</span><br><span class="line">     float scaleH = mNextAppTransitionStartHeight / (float) appHeight;</span><br><span class="line">     //因为对Launcher来说是从原来的大小放大，所以最终的大小是scaleW和scaleH的倒数</span><br><span class="line">     float sW = scaleW &gt; 0.001 ? 1 / scaleW : 1000f;</span><br><span class="line">     float sH = scaleH &gt; 0.001 ? 1 / scaleH : 1000f;</span><br><span class="line">     //第三和第四个参数是缩放点的中心位置，计算方法和app放大的位置相同，这样才能保证</span><br><span class="line">     Animation scale = new ScaleAnimation(1f, sW, 1f, sH,</span><br><span class="line">              computePivot(mNextAppTransitionStartX, scaleW),</span><br><span class="line">              computePivot(mNextAppTransitionStartY, scaleH));</span><br><span class="line">      scale.setInterpolator(mDecelerateInterpolator);</span><br><span class="line">      Animation alpha = new AlphaAnimation(1f, 0.0f);</span><br><span class="line">      alpha.setDuration(300);</span><br><span class="line">      alpha.setInterpolator(mThumbnailFadeOutInterpolator);</span><br><span class="line">      AnimationSet set = new AnimationSet(false);</span><br><span class="line">      set.addAnimation(scale);</span><br><span class="line">      set.addAnimation(alpha);</span><br><span class="line">      set.setDetachWallpaper(true);</span><br><span class="line">      a = set;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>经过这几步修改，进场动画基本完成<br>总结:</p>
+<ul>
+<li><code>ActivityOptions.makeScaleUpAnimation</code>来实现需要的放大动画</li>
+<li>原来的<code>App</code>放大的动画需要调整<code>Interpolator</code>，即放大动画和透明度动画的变化速率</li>
+<li>加载Launcher动画时也需要调用<code>createScaleUpAnimationLocked</code>方法，只是传入的enter值为false</li>
+<li>Launcher的动画缩放中心位置和App缩放动画是相同的，但是放大倍数是相反的</li>
+</ul>
+<h3 id="退场动画"><a href="#退场动画" class="headerlink" title="退场动画"></a>退场动画</h3><p>进场动画可以通过<code>startActivity(intent, opts.toBundle());</code>传参数到<code>AppTransition</code>类中构造对应的方法，而退场时却没有对应的方法，这时候面临几个问题:</p>
+<ul>
+<li>怎么设置退场动画</li>
+<li>什么时候来设置退场动画</li>
+<li>退场动画的位置参数从哪里来</li>
+</ul>
+<p>这里看一下进场动画时的设置流程:<br><img src="../images/进场动画时的设置流程.png" alt="进场动画时的设置流程"></p>
+<p>可以看到是<code>ActivityStack</code>在执行<code>Resume</code>的流程时一步步将<code>ScaleUp</code>的相关参数设置到AppTranssion中去的。<br>所以可以仿照这个流程在<code>WindowMamagerService</code>和<code>AppTransition</code>中添加一个<code>overridePendingAppTransitionScaleUp</code>方法:<br><code>WindowMamagerService</code>中添加:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">overridePendingAppTransitionScaleDown</span><span class="params">(<span class="keyword">int</span> startX, <span class="keyword">int</span> startY, <span class="keyword">int</span> startWidth,</span></span></span><br><span class="line"><span class="function"><span class="params">            <span class="keyword">int</span> startHeight)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">synchronized</span>(mWindowMap) &#123;</span><br><span class="line">            mAppTransition.overridePendingAppTransitionScaleDown(startX, startY, startWidth,startHeight);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>AppTransition中添加:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">overridePendingAppTransitionScaleDown</span><span class="params">(<span class="keyword">int</span> startX, <span class="keyword">int</span> startY, <span class="keyword">int</span> startWidth,</span></span></span><br><span class="line"><span class="function"><span class="params">                                                    <span class="keyword">int</span> startHeight)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (isTransitionSet()) &#123;</span><br><span class="line">        mNextAppTransitionType = NEXT_TRANSIT_TYPE_SCALE_DOWN;</span><br><span class="line">        mNextAppTransitionPackage = <span class="keyword">null</span>;</span><br><span class="line">        mNextAppTransitionThumbnail = <span class="keyword">null</span>;</span><br><span class="line">        mNextAppTransitionStartX = startX;</span><br><span class="line">        mNextAppTransitionStartY = startY;</span><br><span class="line">        mNextAppTransitionStartWidth = startWidth;</span><br><span class="line">        mNextAppTransitionStartHeight = startHeight;</span><br><span class="line">        postAnimationCallback();</span><br><span class="line">        mNextAppTransitionCallback = <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><code>NEXT_TRANSIT_TYPE_SCALE_DOWN</code>是我自定义的一个动画，用来表示退场的动画<br>AppTransition类中添加:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"> <span class="function">Animation <span class="title">loadAnimation</span><span class="params">(WindowManager.LayoutParams lp, <span class="keyword">int</span> transit, <span class="keyword">boolean</span> enter,</span></span></span><br><span class="line"><span class="function"><span class="params">            <span class="keyword">int</span> appWidth, <span class="keyword">int</span> appHeight, <span class="keyword">int</span> orientation, Rect containingFrame, Rect contentInsets,</span></span></span><br><span class="line"><span class="function"><span class="params">            Rect appFrame, <span class="keyword">boolean</span> isVoiceInteraction)</span> </span>&#123;</span><br><span class="line">         ....</span><br><span class="line">            <span class="comment">// add start</span></span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span>(XOS_LANCHER_TRANSITION &amp;&amp; transit == TRANSIT_WALLPAPER_OPEN</span><br><span class="line">                        &amp;&amp; mNextAppTransitionType == NEXT_TRANSIT_TYPE_SCALE_DOWN)&#123;</span><br><span class="line">            a = createScaleDownAnimationLocked(transit, enter, appWidth, appHeight);<span class="keyword">if</span> (DEBUG_APP_TRANSITIONS || DEBUG_ANIM) Slog.v(TAG,</span><br><span class="line">                    <span class="string">"applyAnimation:"</span></span><br><span class="line">                    + <span class="string">" anim="</span> + a + <span class="string">" nextAppTransition=ANIM_SCALE_DOWN"</span></span><br><span class="line">                    + <span class="string">" transit="</span> + appTransitionToString(transit) + <span class="string">" isEntrance="</span> + enter</span><br><span class="line">                    + <span class="string">" Callers="</span> + Debug.getCallers(<span class="number">3</span>));</span><br><span class="line">        <span class="comment">//add end</span></span><br><span class="line">        &#125;</span><br><span class="line">        ....</span><br><span class="line">&#125;</span><br><span class="line">...</span><br><span class="line"><span class="function"><span class="keyword">private</span> Animation <span class="title">createScaleDownAnimationLocked</span><span class="params">(<span class="keyword">int</span> transit, <span class="keyword">boolean</span> enter,<span class="keyword">int</span> appWidth, <span class="keyword">int</span> appHeight)</span> </span>&#123;</span><br><span class="line">     ....</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>loadAnimation</code>用来选择加载哪个动画，而<code>createScaleDownAnimationLocked</code>便是真正实现的地方了，也是最重要的地方，需要反复微调效果，放在最后说。</p>
+<p>怎么设置怎么设置退场动画解决了，但是什么时候来设置它呢？通过分析log发现，不管进场还是退场的时候其实都会执行一次<code>AcitivityStack</code>的<code>resumeTopActivityInnerLocked</code>，通过<code>ActivityRecord.applyOptionsLocked</code>来试图设置过场动画，只是<code>AcitivityOption</code>在用完一次后就置null了，以后无法再次使用，为达到目的，需要将进场时的<code>AcitivityOption</code>保存起来。<br>这里不能将<code>AcitivityOptions</code>保存在<code>ActivityRecord</code>里面，因为一个<code>AcitivityRecord</code>会对应一个<code>Acitivity</code>，而我们打开<code>app</code>可能会打开多个<code>Activity</code>，退出的时候很有可能不是从进来的<code>Activity</code>退出的。这时候就需要将<code>ActivityOptions</code>保存在<code>Task</code>即<code>TaskRecord</code>中</p>
+<p>所以我思路是这样的:</p>
+<ul>
+<li>打开app的时候，判断前一个<code>Activity</code>是否是<code>Launcher</code>，表示是从<code>launcher</code>打开app，是的话将<code>AcitivityOptions</code>保存到当前app所在的<code>TaskRecord</code></li>
+<li>退出app的时候，判断后一个<code>Activity</code>是否是<code>Launcher</code>，表示退出app，是的话将<code>AcitivityOptions</code>参数从前一个<code>TaskRecord</code>中取出来放入<code>Launcher</code>所在<code>ActivityRecord</code>，这样<code>ActivityRecord</code>就有参数来设置退场动画了</li>
+</ul>
+<p>但是在实际操作过程中遇到一个问题，如果将上述的操作放在<code>resumeTopActivityInnerLocked</code>中会在很多情况下这个方法是取不到前一个<code>ActivityRecord</code>的对象的，但这些操作又要放在<code>resumeTopActivityInnerLocked</code>之前。这里思考到在<code>Acitivity</code> resume之前，肯定会执行前一个<code>Activity</code>的<code>pause</code>操作，最后到找一个合适的保存参数的位置即<code>startPausingLocked</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">final</span> <span class="keyword">boolean</span> <span class="title">startPausingLocked</span><span class="params">(<span class="keyword">boolean</span> userLeaving, <span class="keyword">boolean</span> uiSleeping, <span class="keyword">boolean</span> resuming,<span class="keyword">boolean</span> dontWait)</span> </span>&#123;</span><br><span class="line">		...</span><br><span class="line">       <span class="comment">//add start</span></span><br><span class="line">       <span class="keyword">final</span> TaskRecord prevTask = prev != <span class="keyword">null</span> ? prev.task : <span class="keyword">null</span>;</span><br><span class="line">       <span class="keyword">final</span> TaskRecord nextTask = next != <span class="keyword">null</span> ? next.task : <span class="keyword">null</span>;</span><br><span class="line">       <span class="keyword">if</span> (DEBUG_STATES) Slog.v(TAG_STATES, <span class="string">"Moving to PAUSING: "</span> + prev+<span class="string">";next:"</span>+next+<span class="string">";prevTask:"</span>+prevTask);</span><br><span class="line">       <span class="keyword">if</span>(XOS_LANCHER_TRANSITION &amp;&amp; prev != <span class="keyword">null</span> &amp;&amp; prev.isHomeActivity())&#123;</span><br><span class="line">	       <span class="comment">//前一个activity是Launcher是，将ActivityOptions保存到下一个TaskRecord中</span></span><br><span class="line">        ActivityOptions opt = next != <span class="keyword">null</span> ? next.pendingOptions : <span class="keyword">null</span>;</span><br><span class="line">           <span class="keyword">if</span>(opt != <span class="keyword">null</span> &amp;&amp; opt.getAnimationType() == ActivityOptions.ANIM_SCALE_UP &amp;&amp; nextTask != <span class="keyword">null</span>)&#123;</span><br><span class="line">               nextTask.updatePendingOptions(opt);</span><br><span class="line">               <span class="keyword">if</span>(DEBUG_STATES)&#123;</span><br><span class="line">                   Slog.d(TAG_STATES,<span class="string">"resumeTopActivityLocked updatePendingOptions to task:"</span>+opt);</span><br><span class="line">               &#125;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">		<span class="keyword">if</span>(XOS_LANCHER_TRANSITION &amp;&amp; ((next != <span class="keyword">null</span> &amp;&amp; next.isHomeActivity())||next == <span class="keyword">null</span>))&#123;</span><br><span class="line">           <span class="keyword">boolean</span> maySkip = <span class="keyword">false</span>;</span><br><span class="line">           <span class="keyword">if</span>(next == <span class="keyword">null</span>)&#123;</span><br><span class="line">               maySkip = PowerOffAlarmUtility.isAlarmBoot();</span><br><span class="line">           &#125;</span><br><span class="line">           <span class="comment">//会存在有些情况获取的下一个AcitivityRecord为null，这些问题nex都是为Launcher的</span></span><br><span class="line">            ActivityRecord homeRecord = next != <span class="keyword">null</span> ? next : mStackSupervisor.getHomeActivity();</span><br><span class="line">           <span class="keyword">if</span>(DEBUG_STATES)&#123;</span><br><span class="line">                   Slog.d(TAG_STATES,<span class="string">"resumeTopActivityLocked maySkip:"</span>+maySkip+<span class="string">"; homeRecord:"</span>+homeRecord);</span><br><span class="line">           &#125;</span><br><span class="line">            <span class="keyword">if</span>(!maySkip &amp;&amp; homeRecord != <span class="keyword">null</span> &amp;&amp; prevTask != <span class="keyword">null</span> &amp;&amp; prevTask.mPendingOptions != <span class="keyword">null</span>)&#123;</span><br><span class="line">               homeRecord.updateScaleOptions(prevTask.mPendingOptions);</span><br><span class="line">               <span class="keyword">if</span>(DEBUG_STATES)&#123;</span><br><span class="line">                   Slog.d(TAG_STATES,<span class="string">"resumeTopActivityLocked updatePendingOptions restore from task:"</span>+prevTask.mPendingOptions);</span><br><span class="line">               &#125;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="comment">//add end</span></span><br><span class="line">       ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样我们都顺利的记住了进入App和退出App时的位置信息</p>
+<p>接下来看<code>AppTransition.createScaleDownAnimationLocked</code>方法，它是退场动画的构造。与<code>createScaleUpAnimationLocked</code>所构造的动画是相反的。不过会有几个问题：</p>
+<ul>
+<li>退场动画需要一个合适的减速过程才能达到理想的效果</li>
+</ul>
+<p>经过反复试验，最终采用以(0.1,0),(0.1,1)为控制点的三阶贝塞尔曲线<br><img src="../images/_1471512031023.png" alt="Alt text"></p>
+<ul>
+<li>放慢速度会发现，在退场动画时app界面会在Launcher界面下面，这样会感觉Icon图标变得很巨大，而没有给人App界面缩小，最后变成Icon的错觉</li>
+</ul>
+<p>这个需要调试动画时App界面和Launcher界面的Z轴的层次，所以App动画需要设置<code>set.setZAdjustment(Animation.ZORDER_TOP);</code>,而Launcher的动画需要设置:<code>set.setZAdjustment(Animation.ZORDER_NORMAL);</code></p>
+<ul>
+<li><p>缩放时<code>Launcher</code>宽高缩放需要等比，不然会变形，但App的缩放注定又不是等比的，这样会导致App界面消失时由于比<code>Icon</code>而残影严重。最后通过单独调节Y轴方向上的缩放速率来减轻残影。</p>
+</li>
+<li><p>最后还有一个关键点，那就是app界面缩小时透明度的变化，它关系到在退场过程中能否给人感觉平滑过渡到Icon图标<br>下面是调节透明度变化的Interpolator</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">final Interpolator xInterploator = new DecelerateInterpolator(3f);</span><br><span class="line">mThumbnailXLauncherFadeOutInterpolator = new Interpolator() &#123;</span><br><span class="line">     @Override</span><br><span class="line">     public float getInterpolation(float input) &#123;</span><br><span class="line">         // Linear response for first fraction, then complete after that.</span><br><span class="line">         if(input &lt;= 0.10)&#123;//动画开始一段时间app界面保持完全透明</span><br><span class="line">             return 0f;</span><br><span class="line">         &#125;</span><br><span class="line">         if (input &lt;= 0.95f) &#123;</span><br><span class="line">             float t = (input - 0.10f)/ 0.85f;</span><br><span class="line">             return xInterploator.getInterpolation(t);//透明度变化经历一个减速过程</span><br><span class="line">         &#125;</span><br><span class="line">         return 1f;</span><br><span class="line">     &#125;</span><br><span class="line"> &#125;;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>最终<code>createScaleDownAnimationLocked</code>方法如下:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> Animation <span class="title">createScaleDownAnimationLocked</span><span class="params">(<span class="keyword">int</span> transit, <span class="keyword">boolean</span> enter,</span></span></span><br><span class="line"><span class="function"><span class="params">                                               <span class="keyword">int</span> appWidth, <span class="keyword">int</span> appHeight)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//modify  lancher_transition start</span></span><br><span class="line">    <span class="keyword">int</span> startWidth = mNextAppTransitionStartWidth ;</span><br><span class="line">    <span class="keyword">int</span> startHeight = mNextAppTransitionStartHeight ;</span><br><span class="line">    <span class="keyword">int</span> startX = mNextAppTransitionStartX ;</span><br><span class="line">    <span class="keyword">int</span> startY = mNextAppTransitionStartY ;</span><br><span class="line">    <span class="keyword">if</span>(startWidth == mAppIconSize)&#123;<span class="comment">//需要对icon的大小进行一定的修正</span></span><br><span class="line">        <span class="keyword">int</span> inset = <span class="number">5</span> ;</span><br><span class="line">        startWidth = startWidth - inset * <span class="number">2</span>;</span><br><span class="line">        startHeight = startWidth;</span><br><span class="line">        startX = startX + inset;</span><br><span class="line">        startY = startY + inset;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//modify end</span></span><br><span class="line">    Animation a = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">if</span> (!enter) &#123;</span><br><span class="line">        <span class="comment">// Exit app zooms out from the center of Launcher icon rect.</span></span><br><span class="line">        <span class="comment">//modify lancher_transition start</span></span><br><span class="line">        <span class="keyword">float</span> scaleW = startWidth / (<span class="keyword">float</span>) appWidth;</span><br><span class="line">        <span class="keyword">float</span> scaleH = startHeight / (<span class="keyword">float</span>) appHeight;</span><br><span class="line">        Animation scale = <span class="keyword">new</span> ScaleAnimation(<span class="number">1</span>, scaleW, <span class="number">1</span>, <span class="number">1</span>,</span><br><span class="line">                computePivot(startX, scaleW),</span><br><span class="line">                computePivot(startY, scaleH));</span><br><span class="line">        scale.setInterpolator(mFastOutSlowInInterpolator);</span><br><span class="line">        Animation scale2 = <span class="keyword">new</span> ScaleAnimation(<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, scaleH,</span><br><span class="line">                computePivot(startX, scaleW),</span><br><span class="line">                computePivot(startY, scaleH));</span><br><span class="line">        scale2.setInterpolator(mScaleDownYDecelerateInterpolator);</span><br><span class="line">        <span class="comment">//modify lancher_transition start</span></span><br><span class="line"></span><br><span class="line">        Animation alpha = <span class="keyword">new</span> AlphaAnimation(<span class="number">1</span>, <span class="number">0</span>);</span><br><span class="line">        alpha.setInterpolator(mThumbnailXLauncherFadeOutInterpolator);</span><br><span class="line">        AnimationSet set = <span class="keyword">new</span> AnimationSet(<span class="keyword">false</span>);</span><br><span class="line">        set.addAnimation(scale);</span><br><span class="line">        set.addAnimation(scale2);</span><br><span class="line">        set.addAnimation(alpha);</span><br><span class="line">        set.setDetachWallpaper(<span class="keyword">true</span>);</span><br><span class="line">        set.setZAdjustment(Animation.ZORDER_TOP);</span><br><span class="line">        a = set;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">	    <span class="keyword">float</span> scaleW = startWidth / (<span class="keyword">float</span>) appWidth;</span><br><span class="line">        <span class="keyword">float</span> scaleH = startHeight / (<span class="keyword">float</span>) appHeight;</span><br><span class="line">        <span class="keyword">float</span> sW = scaleW &gt; <span class="number">0.001</span> ? <span class="number">1</span> / scaleW : <span class="number">1000f</span>;</span><br><span class="line">        <span class="keyword">float</span> sH = scaleH &gt; <span class="number">0.001</span> ? <span class="number">1</span> / scaleH : <span class="number">1000f</span>;</span><br><span class="line">        <span class="keyword">if</span>(startWidth == startHeight)&#123;</span><br><span class="line">            sW = Math.min(sW,sH);</span><br><span class="line">            sH = sW;<span class="comment">//保存Laucher是等比缩放</span></span><br><span class="line">        &#125;</span><br><span class="line">	    Animation scale = <span class="keyword">new</span> ScaleAnimation(sW, <span class="number">1f</span>, sH, <span class="number">1f</span>,</span><br><span class="line">                   computePivot(startX, scaleW),</span><br><span class="line">                   computePivot(startY, scaleH));</span><br><span class="line">         scale.setInterpolator(mFastOutSlowInInterpolator);</span><br><span class="line"></span><br><span class="line">         Animation alpha = <span class="keyword">new</span> AlphaAnimation(<span class="number">0.0f</span>, <span class="number">1f</span>);</span><br><span class="line">         alpha.setInterpolator(mThumbnailFadeOutInterpolator);</span><br><span class="line">         AnimationSet set = <span class="keyword">new</span> AnimationSet(<span class="keyword">false</span>);</span><br><span class="line">	     set.addAnimation(scale);</span><br><span class="line">          set.addAnimation(alpha);</span><br><span class="line">          set.setDetachWallpaper(<span class="keyword">true</span>);</span><br><span class="line">          set.setZAdjustment(Animation.ZORDER_NORMAL);</span><br><span class="line">          <span class="comment">//modify lancher_transition end</span></span><br><span class="line">          a = set;</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="keyword">long</span> duration = <span class="number">380L</span>;</span><br><span class="line">    <span class="comment">//modify lancher_transition start</span></span><br><span class="line">    a.setDuration(duration);</span><br><span class="line">    a.setFillAfter(<span class="keyword">true</span>);</span><br><span class="line">    a.setInterpolator(mDecelerateInterpolator);</span><br><span class="line">    a.initialize(appWidth, appHeight, appWidth, appHeight);</span><br><span class="line">    <span class="keyword">return</span> a;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="不足之处"><a href="#不足之处" class="headerlink" title="不足之处"></a>不足之处</h3><p>主要表现在退场时不够完美</p>
+<ul>
+<li>退场时app界面的残影仍然存在，在Icon图标不为方形时明显</li>
+<li>由于只app退出时只能回到进场时点击的位置，所以当Launcher上的app图标改变了，然后从任务列表进入app界面，再退出是无法缩放到正确的位置的。</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/07/Electron笔记/" rel="next" title="Electron笔记">
+                <i class="fa fa-chevron-left"></i> Electron笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avator.jpg"
+                alt="A Leaf" />
+            
+              <p class="site-author-name" itemprop="name">A Leaf</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/ToryCrox" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#目标"><span class="nav-number">1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置方法的选择"><span class="nav-number">2.</span> <span class="nav-text">设置方法的选择:</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#三种方法"><span class="nav-number">2.1.</span> <span class="nav-text">三种方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#准备"><span class="nav-number">3.</span> <span class="nav-text">准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进场动画"><span class="nav-number">4.</span> <span class="nav-text">进场动画</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#退场动画"><span class="nav-number">5.</span> <span class="nav-text">退场动画</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#不足之处"><span class="nav-number">6.</span> <span class="nav-text">不足之处</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">A Leaf</span>
+
+  
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
