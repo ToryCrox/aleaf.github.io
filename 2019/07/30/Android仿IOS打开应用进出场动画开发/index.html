@@ -94,13 +94,13 @@
 <meta property="og:site_name" content="A Leaf">
 <meta property="og:description" content="3年前开发Rom时的一个任务，就是仿照IOS打开应用和退出应用的开发过程和思路，可能已经过时，现在拿出来看看以前的思路  目标最终效果做到如下的形式: 点击Launcher上的icon，app从Icon的位置开始放大到全屏，观察发现Launcher也有从Icon位置放大的效果;退场时，app界面和Launcher同时缩小到Icon位置 设置方法的选择:进出场动画和转场动画的本质是一样,都是从一个">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="torycrox.github.io/2019/07/30/images/进场动画时的设置流程.png">
-<meta property="og:image" content="torycrox.github.io/2019/07/30/images/_1471512031023.png">
-<meta property="og:updated_time" content="2019-07-30T16:04:33.966Z">
+<meta property="og:image" content="/images/进场动画时的设置流程.png">
+<meta property="og:image" content="/images/进出场动画贝塞尔曲线.png">
+<meta property="og:updated_time" content="2019-08-02T14:11:15.184Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android仿IOS打开应用进出场动画开发">
 <meta name="twitter:description" content="3年前开发Rom时的一个任务，就是仿照IOS打开应用和退出应用的开发过程和思路，可能已经过时，现在拿出来看看以前的思路  目标最终效果做到如下的形式: 点击Launcher上的icon，app从Icon的位置开始放大到全屏，观察发现Launcher也有从Icon位置放大的效果;退场时，app界面和Launcher同时缩小到Icon位置 设置方法的选择:进出场动画和转场动画的本质是一样,都是从一个">
-<meta name="twitter:image" content="torycrox.github.io/2019/07/30/images/进场动画时的设置流程.png">
+<meta name="twitter:image" content="/images/进场动画时的设置流程.png">
 
 
 
@@ -399,7 +399,7 @@
 <li>什么时候来设置退场动画</li>
 <li>退场动画的位置参数从哪里来</li>
 </ul>
-<p>这里看一下进场动画时的设置流程:<br><img src="../images/进场动画时的设置流程.png" alt="进场动画时的设置流程"></p>
+<p>这里看一下进场动画时的设置流程:<br><img src="/images/进场动画时的设置流程.png" alt="进场动画时的设置流程"></p>
 <p>可以看到是<code>ActivityStack</code>在执行<code>Resume</code>的流程时一步步将<code>ScaleUp</code>的相关参数设置到AppTranssion中去的。<br>所以可以仿照这个流程在<code>WindowMamagerService</code>和<code>AppTransition</code>中添加一个<code>overridePendingAppTransitionScaleUp</code>方法:<br><code>WindowMamagerService</code>中添加:</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">overridePendingAppTransitionScaleDown</span><span class="params">(<span class="keyword">int</span> startX, <span class="keyword">int</span> startY, <span class="keyword">int</span> startWidth,</span></span></span><br><span class="line"><span class="function"><span class="params">            <span class="keyword">int</span> startHeight)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">synchronized</span>(mWindowMap) &#123;</span><br><span class="line">            mAppTransition.overridePendingAppTransitionScaleDown(startX, startY, startWidth,startHeight);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 <p>AppTransition中添加:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">overridePendingAppTransitionScaleDown</span><span class="params">(<span class="keyword">int</span> startX, <span class="keyword">int</span> startY, <span class="keyword">int</span> startWidth,</span></span></span><br><span class="line"><span class="function"><span class="params">                                                    <span class="keyword">int</span> startHeight)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (isTransitionSet()) &#123;</span><br><span class="line">        mNextAppTransitionType = NEXT_TRANSIT_TYPE_SCALE_DOWN;</span><br><span class="line">        mNextAppTransitionPackage = <span class="keyword">null</span>;</span><br><span class="line">        mNextAppTransitionThumbnail = <span class="keyword">null</span>;</span><br><span class="line">        mNextAppTransitionStartX = startX;</span><br><span class="line">        mNextAppTransitionStartY = startY;</span><br><span class="line">        mNextAppTransitionStartWidth = startWidth;</span><br><span class="line">        mNextAppTransitionStartHeight = startHeight;</span><br><span class="line">        postAnimationCallback();</span><br><span class="line">        mNextAppTransitionCallback = <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
@@ -419,7 +419,7 @@
 <ul>
 <li>退场动画需要一个合适的减速过程才能达到理想的效果</li>
 </ul>
-<p>经过反复试验，最终采用以(0.1,0),(0.1,1)为控制点的三阶贝塞尔曲线<br><img src="../images/_1471512031023.png" alt="Alt text"></p>
+<p>经过反复试验，最终采用以(0.1,0),(0.1,1)为控制点的三阶贝塞尔曲线<br><img src="/images/进出场动画贝塞尔曲线.png" alt="Alt text"></p>
 <ul>
 <li>放慢速度会发现，在退场动画时app界面会在Launcher界面下面，这样会感觉Icon图标变得很巨大，而没有给人App界面缩小，最后变成Icon的错觉</li>
 </ul>
