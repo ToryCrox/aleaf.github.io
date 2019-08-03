@@ -75,7 +75,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Android 单元测试," />
 
 
 
@@ -86,13 +86,18 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="A Leaf">
-<meta property="og:url" content="torycrox.github.io/index.html">
+<meta name="description" content="当前做Launcher单元测试的总结的一些要点，回顾一下  简述参考资料:  Android自动化测试–学习浅谈Android单元测试实践Android单元测试 - 如何开始？Android单元测试系列: java的单元测试比较详细，有MVP和一些流行框架的测试方法  Android有关的单元测试大体分为两类:   本地单元测试   运行在jvm上的测试框架，不需要Android环境 位于src">
+<meta name="keywords" content="Android 单元测试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android单元测试总结">
+<meta property="og:url" content="torycrox.github.io/2019/08/03/Android单元测试总结/index.html">
 <meta property="og:site_name" content="A Leaf">
+<meta property="og:description" content="当前做Launcher单元测试的总结的一些要点，回顾一下  简述参考资料:  Android自动化测试–学习浅谈Android单元测试实践Android单元测试 - 如何开始？Android单元测试系列: java的单元测试比较详细，有MVP和一些流行框架的测试方法  Android有关的单元测试大体分为两类:   本地单元测试   运行在jvm上的测试框架，不需要Android环境 位于src">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-08-03T07:16:35.934Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="A Leaf">
+<meta name="twitter:title" content="Android单元测试总结">
+<meta name="twitter:description" content="当前做Launcher单元测试的总结的一些要点，回顾一下  简述参考资料:  Android自动化测试–学习浅谈Android单元测试实践Android单元测试 - 如何开始？Android单元测试系列: java的单元测试比较详细，有MVP和一些流行框架的测试方法  Android有关的单元测试大体分为两类:   本地单元测试   运行在jvm上的测试框架，不需要Android环境 位于src">
 
 
 
@@ -122,13 +127,13 @@
 
 
 
-  <link rel="canonical" href="torycrox.github.io/"/>
+  <link rel="canonical" href="torycrox.github.io/2019/08/03/Android单元测试总结/"/>
 
 
 
 
 
-  <title>A Leaf</title>
+  <title>Android单元测试总结 | A Leaf</title>
   
 
 
@@ -147,8 +152,7 @@
     
   
 
-  <div class="container sidebar-position-right 
-  page-home">
+  <div class="container sidebar-position-right page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -265,9 +269,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -297,9 +301,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/08/03/Android单元测试总结/" itemprop="url">Android单元测试总结</a></h1>
+          <h1 class="post-title" itemprop="name headline">Android单元测试总结</h1>
         
 
         <div class="post-meta">
@@ -349,9 +351,7 @@
       
 
       
-        
-          
-            <blockquote>
+        <blockquote>
 <p>当前做Launcher单元测试的总结的一些要点，回顾一下</p>
 </blockquote>
 <h2 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h2><p>参考资料:</p>
@@ -484,8 +484,6 @@
 </ol>
 <h3 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h3><p>Activity基础测试类:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BaseUiAndroidTest</span> <span class="keyword">extends</span> <span class="title">BaseContextAndroidTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> DEFAULT_UI_TIMEOUT = <span class="number">1000L</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> DEFAULT_WAITTING_TIMEOUT = <span class="number">5000L</span>;</span><br><span class="line">    </span><br><span class="line">	<span class="keyword">protected</span> Context mTargetContext;</span><br><span class="line">    <span class="keyword">protected</span> String mTargetPackage;</span><br><span class="line">    UiDevice mDevice;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 初始化Context， Package等</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="meta">@Before</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setUp</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        mTargetContext = InstrumentationRegistry.getTargetContext();</span><br><span class="line">        mTargetPackage = mTargetContext.getPackageName();</span><br><span class="line">        mDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> String <span class="title">getText</span><span class="params">(@StringRes <span class="keyword">int</span> resId)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> mTargetContext.getResources().getString(resId);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//启动Activity，且等打开完毕</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">startActivitySync</span><span class="params">(@NonNull Intent intent)</span></span>&#123;</span><br><span class="line">        mTargetContext.startActivity(intent);</span><br><span class="line">        waitForIdle();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">pressBack</span><span class="params">()</span></span>&#123;</span><br><span class="line">        mDevice.pressBack();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">waitForIdle</span><span class="params">()</span></span>&#123;</span><br><span class="line">        mDevice.waitForIdle();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//通过id查找</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> UiObject2 <span class="title">findViewById</span><span class="params">(@IdRes <span class="keyword">int</span> id)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> mDevice.wait(Until.findObject(getSelectorForId(id)), DEFAULT_UI_TIMEOUT);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> UiObject2 <span class="title">findViewByText</span><span class="params">(@StringRes <span class="keyword">int</span> resId)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> findViewBySelector(By.text(getText(resId)));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> BySelector <span class="title">getSelectorForId</span><span class="params">(<span class="keyword">int</span> id)</span> </span>&#123;</span><br><span class="line">        String name = mTargetContext.getResources().getResourceEntryName(id);</span><br><span class="line">        <span class="keyword">return</span> By.res(mTargetPackage, name);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> UiObject2 <span class="title">findViewBySelector</span><span class="params">(BySelector condition)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> mDevice.wait(Until.findObject(condition), DEFAULT_UI_TIMEOUT);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//滚动查找元素</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> UiObject2 <span class="title">scrollAndFind</span><span class="params">(UiObject2 container, BySelector condition)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">do</span> &#123;</span><br><span class="line">            UiObject2 widget = container.findObject(condition);</span><br><span class="line">            <span class="keyword">if</span> (widget != <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> widget;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">while</span> (container.scroll(Direction.DOWN, <span class="number">1f</span>));</span><br><span class="line">        <span class="keyword">return</span> container.findObject(condition);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> UiObject2 <span class="title">scrollPageAndFind</span><span class="params">(UiObject2 container, BySelector condition)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">do</span> &#123;</span><br><span class="line">            UiObject2 widget = container.findObject(condition);</span><br><span class="line">            <span class="keyword">if</span> (widget != <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> widget;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">while</span> (container.scroll(Direction.RIGHT, <span class="number">1f</span>));</span><br><span class="line">        <span class="keyword">return</span> container.findObject(condition);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 
-          
-        
       
     </div>
     
@@ -500,276 +498,36 @@
 
     <footer class="post-footer">
       
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="torycrox.github.io/2019/07/30/Android仿IOS打开应用进出场动画开发/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="A Leaf">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avator.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="A Leaf">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/07/30/Android仿IOS打开应用进出场动画开发/" itemprop="url">Android仿IOS打开应用进出场动画开发</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-30T23:48:15+08:00">
-                2019-07-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
+        <div class="post-tags">
           
-
+            <a href="/tags/Android-单元测试/" rel="tag"># Android 单元测试</a>
           
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
         </div>
-      </header>
-    
+      
 
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
+      
       
       
 
       
-        
-          <blockquote>
-<p>3年前开发Rom时的一个任务，就是仿照IOS打开应用和退出应用的开发过程和思路，可能已经过时，现在拿出来看看以前的思路</p>
-</blockquote>
-<h3 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h3><p>最终效果做到如下的形式: 点击Launcher上的icon，app从Icon的位置开始放大到全屏，观察发现Launcher也有从Icon位置放大的效果;退场时，app界面和Launcher同时缩小到Icon位置</p>
-<h3 id="设置方法的选择"><a href="#设置方法的选择" class="headerlink" title="设置方法的选择:"></a>设置方法的选择:</h3><p>进出场动画和转场动画的本质是一样,都是从一个activity过渡到另一个activity的动画,所不同是进出场动画是在两个app之间的过渡，而且Launcher所在的activity是一个壁纸窗口，这是使用的时候需要注意的。</p>
-<h4 id="三种方法"><a href="#三种方法" class="headerlink" title="三种方法"></a>三种方法</h4><ul>
-<li>设置theme中的 android:windowAnimationStyle<br>这是最简单方便的方式，只需要我们配置几个动画的xml就ok了，缺点是由于是在主题的里面的静态资源，不能根据实际情况改变动画类型和和设置相关参数。诸多条件限制决定了这种方式不能达到目的。</li>
-<li>overridePendingTransition方式<br>这种方式可以让我们覆盖掉第一种方式设置的动画，优点是我们可以在代码里面动态改变它，但遗憾的是这个方法只受动画的xml文件形式，也无法接受设置动画的参数。</li>
-<li>ActivityOptions方式<br>这种方法是在startActivity的时候，通过ActivityOptions构造出一个Bundle参数，传递给WindowManager，用来覆盖默认的动画，这样就为我们定义转场动画提供了扩展空间。实际查看Launcher的源代码，原生也是这么做的。
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/07/30/Android仿IOS打开应用进出场动画开发/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/30/Android仿IOS打开应用进出场动画开发/" rel="next" title="Android仿IOS打开应用进出场动画开发">
+                <i class="fa fa-chevron-left"></i> Android仿IOS打开应用进出场动画开发
+              </a>
+            
           </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
 
-    
+          <span class="post-nav-divider"></span>
 
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="torycrox.github.io/2018/07/07/Electron笔记/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="A Leaf">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avator.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="A Leaf">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/07/07/Electron笔记/" itemprop="url">Electron笔记</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
+          <div class="post-nav-prev post-nav-item">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-07T17:50:11+08:00">
-                2018-07-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-            <p>参考:</p>
-<p>官网: <a href="https://electronjs.org/docs" target="_blank" rel="noopener">https://electronjs.org/docs</a><br><a href="https://www.jianshu.com/p/57d910008612" target="_blank" rel="noopener">Electron: 从零开始写一个记事本app</a></p>
-<h2 id="环境安装"><a href="#环境安装" class="headerlink" title="环境安装"></a>环境安装</h2><p>安装<code>node.js</code> : <a href="https://nodejs.org/en/" target="_blank" rel="noopener">https://nodejs.org/en/</a></p>
-<p>安装npm：</p>
-<p>npm可能用不了，可以用cnpm, 官网<a href="https://npm.taobao.org/" target="_blank" rel="noopener">https://npm.taobao.org/</a><br>安装命令:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g cnpm --registry=https://registry.npm.taobao.org</span><br></pre></td></tr></table></figure>
-<p><strong>安装<code>electron</code>包</strong>:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;cnpm install -g electron</span><br><span class="line">OR</span><br><span class="line">&gt;npm install electron -g</span><br></pre></td></tr></table></figure>
-<p><strong>验证electron安装成功</strong>: 运行<code>electron</code></p>
-<p><strong>安装Electron-forge</strong><br>这是一个类似于傻瓜开发包的Electron工具整合项目。具体介绍点击 这里。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cnpm install -g electron-forge</span><br></pre></td></tr></table></figure></p>
-<h2 id="新建项目"><a href="#新建项目" class="headerlink" title="新建项目"></a>新建项目</h2><p>通过以下命令创建项目:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">electron-forge init [项目名]</span><br></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -779,293 +537,11 @@
   </article>
 
 
-    
-      
 
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="torycrox.github.io/2018/07/04/Android-Studio-上传代码到Maven仓库/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="A Leaf">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avator.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="A Leaf">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/07/04/Android-Studio-上传代码到Maven仓库/" itemprop="url">Android Studio 上传代码到Maven仓库</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-04T22:47:24+08:00">
-                2018-07-04
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>将自己的代码库上传到Maven一般有几个选择:</p>
-<ol>
-<li>本地仓库</li>
-<li>自己搭建的maven私有仓库, 如: Nexus</li>
-<li>上传到Maven</li>
-<li>上传到jcenter</li>
-<li>上传到jitpack，这个上传很方便，比较推荐</li>
-</ol>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://www.jianshu.com/p/57f8af15ef9c/" target="_blank" rel="noopener">Android Studio上传项目到Maven仓库</a></p>
-<h2 id="几点注意"><a href="#几点注意" class="headerlink" title="几点注意"></a>几点注意</h2><ol>
-<li>上传library不能引用aar</li>
-<li>配置了<code>publishNonDefault true</code>会引用上传时将Release和Debug的aar都上传到Maven，所以要么去除要么按照下面的方法配置</li>
-<li>注意如果上传到snapshots测试仓库中，version必须以<code>-SNAPSHOT</code>结尾</li>
-</ol>
-<h2 id="Gradle上传配置"><a href="#Gradle上传配置" class="headerlink" title="Gradle上传配置"></a>Gradle上传配置</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">apply plugin: <span class="string">"maven"</span></span><br><span class="line"></span><br><span class="line">def compileMode = <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//分别为正式仓库，测试仓库和本地仓库，</span></span><br><span class="line">def releaseUrl = <span class="string">"http://192.168.1.78:8090/nexus/content/repositories/releases"</span></span><br><span class="line">def snapshotsUrl = <span class="string">"http://192.168.1.78:8090/nexus/content/repositories/snapshots/"</span></span><br><span class="line">def localUrl = <span class="string">'file://'</span> + <span class="keyword">new</span> File(System.getProperty(<span class="string">'user.home'</span>), <span class="string">'.m2/repository'</span>).absolutePath</span><br><span class="line">def uploadUrl = compileMode == <span class="number">1</span> ? snapshotsUrl : compileMode == <span class="number">2</span> ? localUrl : releaseUrl</span><br><span class="line"></span><br><span class="line">uploadArchives &#123;</span><br><span class="line">    repositories &#123;</span><br><span class="line">        mavenDeployer &#123;</span><br><span class="line">            repository(url: uploadUrl) &#123;</span><br><span class="line">                authentication(userName: NAME, password: PASSWORD) <span class="comment">// maven授权信息</span></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            pom.version = VERSION</span><br><span class="line">            pom.artifactId = ARTIFACT_ID</span><br><span class="line">            pom.groupId = GROUP_ID   </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>注意如果上传到snapshots测试仓库中，version必须以<code>-SNAPSHOT</code>结尾</p>
-</blockquote>
-<h2 id="多flavor或多buildType配置"><a href="#多flavor或多buildType配置" class="headerlink" title="多flavor或多buildType配置"></a>多flavor或多buildType配置</h2><p>maven上传是默认不支持多flavor的，如果library配置了<code>publishNonDefault true</code>, <strong>在执行<code>gradlew upload</code>时会将releas和debug的aar包都上传上去，导致在引用时无法找到aar</strong>, 这点千万要注意, 需要修改gradle配置</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">uploadArchives &#123;</span><br><span class="line">    repositories &#123;</span><br><span class="line">        mavenDeployer &#123;</span><br><span class="line">            repository(url: uri(uploadUrl))&#123;</span><br><span class="line">                <span class="comment">//配置账号密码</span></span><br><span class="line">                authentication(userName: <span class="string">"userName"</span>, password: <span class="string">"password"</span>)</span><br><span class="line">            &#125;</span><br><span class="line">            android.libraryVariants.all &#123; variant -&gt;</span><br><span class="line">                def isFlavor = !variant.flavorName.isEmpty()</span><br><span class="line">                def isRelease = variant.buildType.name == <span class="string">"release"</span></span><br><span class="line"></span><br><span class="line">                <span class="comment">//只上传release的，如果没有多个flavor的去掉isFlavor的判断</span></span><br><span class="line">                <span class="keyword">if</span>(isRelease &amp;&amp; isFlavor)&#123;</span><br><span class="line">                    def _flavorName = <span class="string">"$&#123;variant.flavorName&#125;"</span></span><br><span class="line"></span><br><span class="line">                    <span class="comment">//此处需要再进行一次过滤，否则debug的会被上传上去</span></span><br><span class="line">                    addFilter(_flavorName) &#123; artifact, file -&gt;</span><br><span class="line">                        (artifact.attributes.classifier == <span class="string">"$&#123;variant.flavorName&#125;Release"</span>)</span><br><span class="line">                    &#125;</span><br><span class="line">                    pom(_flavorName).version = android.defaultConfig.versionName</span><br><span class="line">                    pom(_flavorName).groupId = <span class="string">"ARTIFACT_ID"</span></span><br><span class="line">                    pom(_flavorName).artifactId = <span class="string">"GROUP_ID-$&#123;_flavorName&#125;"</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="将源码，java-doc等一并上传"><a href="#将源码，java-doc等一并上传" class="headerlink" title="将源码，java doc等一并上传"></a>将源码，java doc等一并上传</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 指定编码</span></span><br><span class="line">tasks.withType(JavaCompile) &#123;</span><br><span class="line">    options.encoding = <span class="string">"UTF-8"</span></span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line"><span class="comment">// 打包源码</span></span><br><span class="line"><span class="function">task <span class="title">sourcesJar</span><span class="params">(type: Jar)</span> </span>&#123;</span><br><span class="line">    from android.sourceSets.main.java.srcDirs</span><br><span class="line">    classifier = <span class="string">'sources'</span></span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line"><span class="function">task <span class="title">javadoc</span><span class="params">(type: Javadoc)</span> </span>&#123;</span><br><span class="line">    failOnError  <span class="keyword">false</span></span><br><span class="line">    source = android.sourceSets.main.java.sourceFiles</span><br><span class="line">    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))</span><br><span class="line">    classpath += configurations.compile</span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line"><span class="comment">// 制作文档(Javadoc)</span></span><br><span class="line"><span class="function">task <span class="title">javadocJar</span><span class="params">(type: Jar, dependsOn: javadoc)</span> </span>&#123;</span><br><span class="line">    classifier = <span class="string">'javadoc'</span></span><br><span class="line">    from javadoc.destinationDir</span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line">artifacts &#123;</span><br><span class="line">    archives sourcesJar</span><br><span class="line">    archives javadocJar</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="上传jitpack"><a href="#上传jitpack" class="headerlink" title="上传jitpack"></a>上传jitpack</h2><p>jitpack网址:<a href="https://jitpack.io/" target="_blank" rel="noopener">https://jitpack.io/</a></p>
-<p>添加jitpack的仓库引用:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">maven &#123; url <span class="string">'https://jitpack.io'</span> &#125;</span><br></pre></td></tr></table></figure>
-          
-        
+    <div class="post-spread">
       
     </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
   </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="torycrox.github.io/2018/04/15/Android性能优化/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="A Leaf">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avator.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="A Leaf">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/15/Android性能优化/" itemprop="url">Android性能优化</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-15T23:12:55+08:00">
-                2018-04-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>工作几年，主要负责过<code>InCallUI</code>和<code>Launcher</code>，虽然不多，但在性能优化上还是有一些自己的经验和看法，在这里记录一下。</p>
-<p>首先我认为性能优化最核心的思想就是<strong>提升用户体验</strong>，何谓体验? 可能不同的人有不同的答案.<br>在我看来一定要站在用户角度才知道优化什么。<br>有点杂乱，先记录要点， 以后再详细写：</p>
-<ol>
-<li>启动速度。关键点是要把第一页的内容尽早展现给用户。初始化流程; 启动页白屏; 布局层次; 懒加载; cpu运行情况</li>
-<li>流畅性。关键点是主线程的耗时流程。布局层次，布局重用，过度绘制，RecyclerView优化，动画优化，自定义布局和View，耗时操作移去子线程</li>
-<li>内存。图片优化(不用过大的背景图，RGB555，使用Shape或适量图，tint涂色)，慎用三方库，及时释放不用的内存。</li>
-</ol>
-<p>使用工具检测</p>
-<ol>
-<li>TraceView找出耗时方法</li>
-<li>log输出真正的耗时，方便对比优化前后</li>
-<li>过度绘制显示绘制层次</li>
-<li>布局查看器查看布局层次结构</li>
-<li>Systrace查看流程度</li>
-<li>CPU Profiler检查线程运行忙碌情况</li>
-<li>Memory Profiler检查内存占用情况</li>
-<li>Lint代码检查工具检查代码</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-  </section>
-
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
-  </nav>
-
 
 
           </div>
@@ -1073,6 +549,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -1093,8 +573,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -1159,6 +648,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简述"><span class="nav-number">1.</span> <span class="nav-text">简述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#框架结构"><span class="nav-number">2.</span> <span class="nav-text">框架结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#各框架的基本使用"><span class="nav-number">2.1.</span> <span class="nav-text">各框架的基本使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Junit4"><span class="nav-number">2.1.1.</span> <span class="nav-text">Junit4</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mockito"><span class="nav-number">2.1.2.</span> <span class="nav-text">mockito</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#uiautomator"><span class="nav-number">2.1.3.</span> <span class="nav-text">uiautomator</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Espresso"><span class="nav-number">2.1.4.</span> <span class="nav-text">Espresso</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开发要点"><span class="nav-number">2.2.</span> <span class="nav-text">开发要点:</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试点"><span class="nav-number">3.</span> <span class="nav-text">测试点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#附录"><span class="nav-number">3.1.</span> <span class="nav-text">附录</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -1306,6 +811,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
