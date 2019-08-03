@@ -94,7 +94,7 @@
 <meta property="og:site_name" content="A Leaf">
 <meta property="og:description" content="当前做Launcher单元测试的总结的一些要点，回顾一下  简述参考资料:  Android自动化测试–学习浅谈Android单元测试实践Android单元测试 - 如何开始？Android单元测试系列: java的单元测试比较详细，有MVP和一些流行框架的测试方法  Android有关的单元测试大体分为两类:   本地单元测试   运行在jvm上的测试框架，不需要Android环境 位于src">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-03T07:16:35.934Z">
+<meta property="og:updated_time" content="2019-08-03T07:22:03.020Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android单元测试总结">
 <meta name="twitter:description" content="当前做Launcher单元测试的总结的一些要点，回顾一下  简述参考资料:  Android自动化测试–学习浅谈Android单元测试实践Android单元测试 - 如何开始？Android单元测试系列: java的单元测试比较详细，有MVP和一些流行框架的测试方法  Android有关的单元测试大体分为两类:   本地单元测试   运行在jvm上的测试框架，不需要Android环境 位于src">
@@ -391,6 +391,7 @@
 <h2 id="框架结构"><a href="#框架结构" class="headerlink" title="框架结构"></a>框架结构</h2><p>使用<code>Android Instrumentation</code>测试，测试代码写在<code>src/androidTest/java</code>目录下</p>
 <p>使用到的框架有<code>junit4</code>, <code>mockito</code>, <code>Instrumentation</code>, <code>uiautomator</code>, <code>espresso</code><br><code>gradle</code>下的依赖方式:</p>
 <figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">defaultConfig &#123;</span><br><span class="line">    testInstrumentationRunner <span class="string">"android.support.test.runner.AndroidJUnitRunner"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//dependences</span></span><br><span class="line">androidTestCompile libraries.mockitoAndroid</span><br><span class="line">androidTestCompile libraries.testRunner</span><br><span class="line">androidTestCompile libraries.uiautomator</span><br><span class="line">androidTestCompile libraries.annotations</span><br><span class="line">androidTestCompile libraries.espresso</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
 <h3 id="各框架的基本使用"><a href="#各框架的基本使用" class="headerlink" title="各框架的基本使用"></a>各框架的基本使用</h3><h4 id="Junit4"><a href="#Junit4" class="headerlink" title="Junit4"></a>Junit4</h4><p>主要提供各种注解和断言<br>最重要的注解<code>@Test</code>表明了测试的方式，根据根据方法上的注解，其执行顺序为<code>@BeforeClass –&gt; @Before –&gt; @Test –&gt; @After –&gt; @AfterClass</code></p>
 <p>断言一般常用assertNotNull, assertEquals等<br>详细Api和使用见此博客:<a href="https://blog.csdn.net/qq_17766199/article/details/78243176" target="_blank" rel="noopener">https://blog.csdn.net/qq_17766199/article/details/78243176</a></p>
 <h4 id="mockito"><a href="#mockito" class="headerlink" title="mockito"></a>mockito</h4><p>用来模拟对象，脱离对<code>Android Api</code>依赖<br>详细使用方法见: <a href="https://blog.csdn.net/qq_17766199/article/details/78450007" target="_blank" rel="noopener">https://blog.csdn.net/qq_17766199/article/details/78450007</a></p>
